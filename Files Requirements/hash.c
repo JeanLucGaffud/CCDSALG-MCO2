@@ -12,3 +12,7 @@ int search(string key, int tableSize, string hashTable[]) {
     }
     return -1;
 }
+int findPrime(int n)
+{
+    
+}
