@@ -1,64 +1,59 @@
 #include "hash.h"
+#include <stdbool.h>
+#include <string.h>
 
-int search(HashTable *hashTable, int tableSize, string key) {
+bool isUniqque(string *words, int n, string key){
+    for(int i = 0; i < n; i++){
+        if(strcmp(words[i], key) == 0){
+            return false;
+        }
+    }
+    return true;
+}
+
+int collisionResolution(HashTable *hashTable, int tableSize, string key, int value){
     int index = hashFunction(key, tableSize);
     int i = 0;
-    while (i < tableSize) {
-        if (strcmp(hashTable[index].key, key) == 0) {
+    while(hashTable[index].value != -1){
+        index = (index + 1) % tableSize; // Linear probing
+        i++;
+    }
+    strcpy(hashTable[index].key, key);
+    hashTable[index].value = value;
+    return index;
+}
+
+int search(HashTable *hashTable, int tableSize, string key){
+    int index = hashFunction(key, tableSize);
+    int i = 0;
+    while(hashTable[index].value != -1){ // While the index is not empty
+        if(strcmp(hashTable[index].key, key) == 0){
             return index;
         }
-        index = collisionResolution(index, tableSize, i);
+        index = (index + 1) % tableSize; // Linear probing
         i++;
     }
     return -1;
 }
 
-int collisionResolution(int index, int tableSize, int i) {
-    return (index + i * i) % tableSize;
+int hashFunction(string key, int tableSize){
+    // Implement your hash function here
 }
 
-unsigned long djb2(unsigned char *str) {
-    unsigned long hash = 5381;
-    int c;
-    while ((c = *str++)) {
-        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-    }
-    return hash;
-}
-
-int hashFunction(char *key, int tableSize) {
-    return djb2((unsigned char *)key) % tableSize;
-}
-
-HashTable createHashTable(int tableSize, string hashTable[]) {
-    HashTable ht;
-    for (int i = 0; i < tableSize; i++) {
-        strcpy(hashTable[i], "");
-    }
-    return ht;
-}
-
-void insert(HashTable *hashTable, int tableSize, string key, int value) {
+void insert(HashTable *hashTable, int tableSize, string key, int value){
     int index = hashFunction(key, tableSize);
-    int i = 0;
-    while (i < tableSize) {
-        if (strcmp(hashTable[index].key, "") == 0) {
-            strcpy(hashTable[index].key, key);
-            hashTable[index].value = value;
-            return;
-        }
-        index = collisionResolution(index, tableSize, i);
-        i++;
+    if(hashTable[index].value != -1){
+        index = collisionResolution(hashTable, tableSize, key, value);
+    } else {
+        strcpy(hashTable[index].key, key);
+        hashTable[index].value = value;
     }
-    printf("Hash table is full\n");
 }
 
-void delete(HashTable *hashTable, int tableSize, string key) {
+void delete(HashTable *hashTable, int tableSize, string key){
     int index = search(hashTable, tableSize, key);
-    if (index != -1) {
+    if(index != -1){
         strcpy(hashTable[index].key, "");
-        hashTable[index].value = 0;
-    } else {
-        printf("Key not found\n");
+        hashTable[index].value = -1;
     }
 }
