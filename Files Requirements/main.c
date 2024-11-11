@@ -1,6 +1,5 @@
-#include "hash.c"
 #include <stdio.h>
-
+#include "hash.c"
 
 int inputFile(string name, string *words){
     FILE *f = fopen(name, "r");
@@ -32,9 +31,12 @@ void printArray(string *words, int n){
 int main() {
     string name = "input.txt";
     string words[MAX_1D_ARRAY];
+    HashTable *hashTable;
+
+
     int num = inputFile(name, words);
-    printf("%d\n", num);
-    printArray(words, num);
+
+    HashTable hashTable = *createHashTable(num, words);
 
     return 0;
 }
