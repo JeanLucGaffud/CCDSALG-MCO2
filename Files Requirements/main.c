@@ -36,9 +36,9 @@ int main() {
 
 
     int num = inputFile(name, words);
-	printArray(words, num);
+	//printArray(words, num);
     //HashTable hashTable = *createHashTable(num, words);
     
-    printf("Hello %d", 0);
+    printf("Hello %d", convertAndAppend("abc"));
     return 0;
 }

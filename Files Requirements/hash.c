@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdbool.h>
 #define MAX_1D_ARRAY 16384
-#define MAX_STRING 256
+#define MAX_STRING 16
 typedef char string[MAX_STRING];
 
 typedef struct {
@@ -13,18 +13,17 @@ typedef struct {
 } HashTable;
 
 int convertAndAppend(char* words) {
-    string result;
     int length = strlen(words);
-    int index = 0; // Index for the new string
-
+    char result[length + 1]; // Allocate enough space for the new string
+    char temp[5]; // Temporary string to hold the ASCII value of the current character
+    int index = 0;
     // Loop through each character in the words string
     for (int i = 0; i < length; i++) {
-        int asciiValue = (int)words[i];    // Convert character to its ASCII integer value
-        char convertedChar = (char)asciiValue; // Convert the ASCII value back to a char
-        result[index++] = convertedChar;   // Append the character to the new string
+        int ascii = (int)words[i]; // Get the ASCII value of the current character
+        snprintf(temp, sizeof(temp), "%d", ascii); // Convert the ASCII value to a string
+        strcat(result, temp); // Append the string to the new string
     }
 
-    result[index] = '\0'; // Null-terminate the new string
     return atoi(result); // Convert the new string to an integer
 }
 
