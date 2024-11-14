@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "hash.c"
-
-typedef char string[MAX_STRING];
 
 int inputFile(string name, string **words){
     FILE *f = fopen(name, "r");
@@ -49,7 +45,7 @@ void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHo
 void printHashTable(HashTable *hashTable, int n){
     for(int i = 0; i < n; i++){
         if(hashTable[i].value != -1){
-            printf("%s %d\n", hashTable[i].key, hashTable[i].value);
+            printf("@Key: %s @Value: %d\n", hashTable[i].key, hashTable[i].value);
         }
     }
 }
@@ -65,21 +61,21 @@ int main() {
     string output = "output.txt";
     string *words;
     HashTable *hashTable;
-    int aNum, tableSize;
+    int nWords, tableSize;
     
-    printf("Enter the name of the file: ");
-    scanf("%s", name);
+    // printf("Enter the name of the file: ");
+    // scanf("%s", name);
 
-    aNum = inputFile(name, &words);
+    nWords = inputFile(name, &words);
 
-    hashTable = createHashTable(words, aNum, &tableSize); // Corrected memory allocation
+    hashTable = createHashTable(words, nWords, &tableSize); 
 
-    HashArray(words, tableSize, hashTable);
+    HashArray(words, nWords, hashTable, tableSize);
     printHashTable(hashTable, tableSize);
     // printf("Enter the name of the output file: ");
     // scanf("%s", output);
 
-    // outputFile(output, hashTable, aNum, tableSize, nKeys, nHome, nCollisions);
+    // outputFile(output, hashTable, nWords, tableSize, nKeys, nHome, nCollisions);
 
     // free(words);
     // free(hashTable);

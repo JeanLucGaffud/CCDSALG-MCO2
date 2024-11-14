@@ -22,10 +22,8 @@ int convertAndAppend(char* words) {
     // Loop through each character in the words string
     for (int i = 0; i < length; i++) {
         int ascii = (int)words[i]; // Get the ASCII value of the current character
-        printf("%d\n", ascii);
         snprintf(temp, sizeof(temp), "%d", ascii); // Convert the ASCII value to a string
         strcat(result, temp); // Append the string to the new string
-        printf("%s\n", result);
     }
 
     return atoi(result); // Convert the new string to an integer
@@ -51,10 +49,10 @@ int HashFunction(string key, int tableSize){
 returns the index of the key in the linked list.
 
 */
-int collissionresolution(HashTable *hashTable, int index, string key, int size){
-    int i = 0;
+int collisionresolution(HashTable *hashTable, int index, int tableSize){
+    int i = 1; 
     while(hashTable[index].value != -1){
-        index = (index + i) % size;
+        index = (index + i) % tableSize;
         i++;
     }
     return index;
@@ -77,19 +75,18 @@ int Search(HashTable *hashTable, int tableSize, string key){
     return -1;
 }
 
-int *HashArray(string *words, int n, HashTable *hashTable){
+void HashArray(string *words, int n, HashTable *hashTable, int tableSize){
     for(int i = 0; i < n; i++){
-        int index = HashFunction(words[i], n);
-        if(Search(hashTable, n, words[i]) == -1){
+        int index = HashFunction(words[i], tableSize);
+        if(hashTable[index].value == -1 || strcmp(hashTable[index].key, words[i]) == 0){    
             hashTable[index].value = 1;
             strcpy(hashTable[index].key, words[i]);
         } else {
-            index = collissionresolution(hashTable, index, words[i], n);
-            hashTable[index].value = 1;
-            strcpy(hashTable[index].key, words[i]);
+            int newIndex = collisionresolution(hashTable, index, tableSize);
+            hashTable[newIndex].value = 1;
+            strcpy(hashTable[newIndex].key, words[i]);
         }
     }
-    return 0; // Added return statement to avoid warning
 }
 
 
