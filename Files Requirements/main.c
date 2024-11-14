@@ -60,13 +60,13 @@ int main() {
     HashArray(words, num, hashTable);
     printHashTable(hashTable, num);
 
-    printf("Enter the name of the output file: ");
-    scanf("%s", output);
+    // printf("Enter the name of the output file: ");
+    // scanf("%s", output);
 
-    outputFile(output, hashTable, num);
+    // outputFile(output, hashTable, num);
 
-    free(words);
-    free(hashTable);
+    // free(words);
+    // free(hashTable);
 
     return 0;
 }

@@ -14,9 +14,11 @@ typedef struct {
 
 int convertAndAppend(char* words) {
     int length = strlen(words);
-    char result[MAX_STRING] = ""; // Allocate enough space for the new string
-    char temp[5]; // Temporary string to hold the ASCII value of the current character
     int index = 0;
+
+    string result = ""; // Allocate enough space for the new string
+    string temp; // Temporary string to hold the ASCII value of the current character
+
     // Loop through each character in the words string
     for (int i = 0; i < length; i++) {
         int ascii = (int)words[i]; // Get the ASCII value of the current character
@@ -59,7 +61,7 @@ int collissionresolution(HashTable *hashTable, int index, string key, int size){
 void HashArray(string *words, int n, HashTable *hashTable){
     for(int i = 0; i < n; i++){
         int index = HashFunction(words[i], n);
-        if(hashTable[index].value == -1){
+        if(hashTable[index].value == -1 && strcmp(hashTable[index].key, words[i]) == 0){
             hashTable[index].value = 1;
             strcpy(hashTable[index].key, words[i]);
         } else {
