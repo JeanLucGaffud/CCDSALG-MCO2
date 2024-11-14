@@ -10,7 +10,6 @@ typedef char string[MAX_STRING];
 typedef struct {
     string key;
     int value;
-    HashTable *next;
 } HashTable;
 
 int convertAndAppend(char* words) {
@@ -32,6 +31,9 @@ int convertAndAppend(char* words) {
 
 HashTable *createHashTable(string *words, int tableSize){
     HashTable *hashTable = (HashTable *)malloc(sizeof(HashTable) * tableSize);
+    for(int i = 0; i < tableSize; i++){
+        hashTable[i].value = -1;
+    }
     
     return hashTable;
 }
@@ -45,15 +47,27 @@ int HashFunction(string key, int tableSize){
 returns the index of the key in the linked list.
 
 */
-int collissionresolution(HashTable **hashTable, int index, string key){
-    do{
-        if(hashTable[index].next == NULL && hashTable[index].key != key){
-            hashTable[index].next = (HashTable *)malloc(sizeof(HashTable));
+int collissionresolution(HashTable *hashTable, int index, string key, int size){
+    int i = 0;
+    while(hashTable[index].value != -1 &&){
+        index = (index + i) % size;
+        i++;
+    }
+    return index;
+}
+
+void HashArray(string *words, int n, HashTable *hashTable){
+    for(int i = 0; i < n; i++){
+        int index = HashFunction(words[i], n);
+        if(hashTable[index].value == -1){
+            hashTable[index].value = 1;
+            strcpy(hashTable[index].key, words[i]);
+        } else {
+            index = collissionresolution(hashTable, index, words[i], n);
+            hashTable[index].value = 1;
+            strcpy(hashTable[index].key, words[i]);
         }
-        else if(hashTable[index].key == key){
-            return index;
-        }
-    }while(hashTable[index].key != key);
+    }
 }
 
 
