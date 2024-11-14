@@ -27,6 +27,25 @@ int inputFile(string name, string **words){
     return num;
 }
 
+void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHome, int nCollisions){
+    FILE *f = fopen(name, "w");
+
+    if(f == NULL){
+        printf("File not found\n");
+        return;
+    }
+
+    fprintf(f, "Number of strings read: %d\n", nRead);
+
+    for(int i = 0; i < nRead; i++){
+        if(hashTable[i].value != -1){
+            fprintf(f, "%s %d\n", hashTable[i].key, hashTable[i].value);
+        }
+    }
+
+    fclose(f);
+}
+
 void printHashTable(HashTable *hashTable, int n){
     for(int i = 0; i < n; i++){
         if(hashTable[i].value != -1){
@@ -46,24 +65,21 @@ int main() {
     string output = "output.txt";
     string *words;
     HashTable *hashTable;
-    int num;
+    int aNum, tableSize;
     
-    // printf("Enter the name of the file: ");
-    // scanf("%s", name);
+    printf("Enter the name of the file: ");
+    scanf("%s", name);
 
-    num = inputFile(name, &words);
-    printArray(words, num);
+    aNum = inputFile(name, &words);
 
-    *hashTable = *createHashTable(words, num);
-    
+    hashTable = createHashTable(words, aNum, &tableSize); // Corrected memory allocation
 
-    HashArray(words, num, hashTable);
-    printHashTable(hashTable, num);
-
+    HashArray(words, tableSize, hashTable);
+    printHashTable(hashTable, tableSize);
     // printf("Enter the name of the output file: ");
     // scanf("%s", output);
 
-    // outputFile(output, hashTable, num);
+    // outputFile(output, hashTable, aNum, tableSize, nKeys, nHome, nCollisions);
 
     // free(words);
     // free(hashTable);
