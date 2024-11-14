@@ -14,8 +14,6 @@ typedef struct {
 
 int convertAndAppend(char* words) {
     int length = strlen(words);
-    int index = 0;
-
     char result[MAX_STRING * 4] = ""; // Allocate enough space for the new string
     char temp[10]; // Temporary string to hold the ASCII value of the current character
 
@@ -29,26 +27,52 @@ int convertAndAppend(char* words) {
     return atoi(result); // Convert the new string to an integer
 }
 
-HashTable *createHashTable(string *words, int arraySize, int *tableSize){
-    int num = 1.1 * (int)round(arraySize);
+bool isPrime(int num){
+    if (num <= 1) {
+        return false;
+    }
+    if (num == 2 || num == 3) {
+        return true;
+    }
+    if (num % 2 == 0 || num % 3 == 0) {
+        return false;
+    }
+
+    for (int i = 5; i * i <= num; i += 6) {
+        if (num % i == 0 || num % (i + 2) == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int primeNumberAbove(int num){
+    while(!isPrime(num)){
+        num++;
+    }
+    return num;
+}
+
+HashTable *createHashTable(int arraySize, int *tableSize){
+    int num = primeNumberAbove(1.1 * (int)round(arraySize));
+    printf("num: %d\n", num);
     HashTable *hashTable = (HashTable *)malloc(sizeof(HashTable) * num);
-    for(int i = 0; i < num; i++){ // Corrected loop condition
+
+    for(int i = 0; i < num; i++){ 
         strcpy(hashTable[i].key, "");
         hashTable[i].value = -1;
     }
+
     *tableSize = num;
     return hashTable;
 }
+
 
 int HashFunction(string key, int tableSize){
     int index = convertAndAppend(key) % tableSize;
     return index;
 }
 
-/*
-returns the index of the key in the linked list.
-
-*/
 int collisionresolution(HashTable *hashTable, int index, int tableSize){
     int i = 1; 
     while(hashTable[index].value != -1){
@@ -58,22 +82,7 @@ int collisionresolution(HashTable *hashTable, int index, int tableSize){
     return index;
 }
 
-int Search(HashTable *hashTable, int tableSize, string key){
-    int index = HashFunction(key, tableSize);
-    int i = 0;
-    if(strcmp(hashTable[index].key, key) == 0){
-        return index;
-    } else {
-        while(hashTable[index].value != -1 && i < tableSize){
-            index = (index + i) % tableSize;
-            if(strcmp(hashTable[index].key, key) == 0){
-                return index;
-            }
-            i++;
-        }
-    }
-    return -1;
-}
+
 
 void HashArray(string *words, int n, HashTable *hashTable, int tableSize){
     for(int i = 0; i < n; i++){
@@ -89,4 +98,19 @@ void HashArray(string *words, int n, HashTable *hashTable, int tableSize){
     }
 }
 
-
+// int Search(HashTable *hashTable, int tableSize, string key){
+//     int index = HashFunction(key, tableSize);
+//     int i = 0;
+//     if(strcmp(hashTable[index].key, key) == 0){
+//         return index;
+//     } else {
+//         while(hashTable[index].value != -1 && i < tableSize){
+//             index = (index + i) % tableSize;
+//             if(strcmp(hashTable[index].key, key) == 0){
+//                 return index;
+//             }
+//             i++;
+//         }
+//     }
+//     return -1;
+// }

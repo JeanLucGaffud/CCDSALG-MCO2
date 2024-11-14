@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <stdbool.h>
 #include "hash.c"
 
 int inputFile(string name, string **words){
@@ -23,24 +28,24 @@ int inputFile(string name, string **words){
     return num;
 }
 
-void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHome, int nCollisions){
-    FILE *f = fopen(name, "w");
+// void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHome, int nCollisions){
+//     FILE *f = fopen(name, "w");
 
-    if(f == NULL){
-        printf("File not found\n");
-        return;
-    }
+//     if(f == NULL){
+//         printf("File not found\n");
+//         return;
+//     }
 
-    fprintf(f, "Number of strings read: %d\n", nRead);
+//     fprintf(f, "Number of strings read: %d\n", nRead);
 
-    for(int i = 0; i < nRead; i++){
-        if(hashTable[i].value != -1){
-            fprintf(f, "%s %d\n", hashTable[i].key, hashTable[i].value);
-        }
-    }
+//     for(int i = 0; i < nRead; i++){
+//         if(hashTable[i].value != -1){
+//             fprintf(f, "%s %d\n", hashTable[i].key, hashTable[i].value);
+//         }
+//     }
 
-    fclose(f);
-}
+//     fclose(f);
+// }
 
 void printHashTable(HashTable *hashTable, int n){
     for(int i = 0; i < n; i++){
@@ -68,7 +73,7 @@ int main() {
 
     nWords = inputFile(name, &words);
 
-    hashTable = createHashTable(words, nWords, &tableSize); 
+    hashTable = createHashTable(nWords, &tableSize); 
 
     HashArray(words, nWords, hashTable, tableSize);
     printHashTable(hashTable, tableSize);
@@ -76,9 +81,8 @@ int main() {
     // scanf("%s", output);
 
     // outputFile(output, hashTable, nWords, tableSize, nKeys, nHome, nCollisions);
-
-    // free(words);
-    // free(hashTable);
+    free(words);
+    free(hashTable);
 
     return 0;
 }
