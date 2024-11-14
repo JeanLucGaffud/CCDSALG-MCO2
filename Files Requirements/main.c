@@ -75,11 +75,11 @@ int main() {
 
     hashTable = createHashTable(nWords, &tableSize); 
 
-    HashArray(words, nWords, hashTable, tableSize);
-    printHashTable(hashTable, tableSize);
+    //HashArray(words, nWords, hashTable, tableSize);
+    //printHashTable(hashTable, tableSize);
     // printf("Enter the name of the output file: ");
     // scanf("%s", output);
-
+    printf("test");
     // outputFile(output, hashTable, nWords, tableSize, nKeys, nHome, nCollisions);
     free(words);
     free(hashTable);

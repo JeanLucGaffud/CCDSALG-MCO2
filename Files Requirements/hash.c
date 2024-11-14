@@ -54,19 +54,18 @@ int primeNumberAbove(int num){
 }
 
 HashTable *createHashTable(int arraySize, int *tableSize){
-    int num = primeNumberAbove(1.1 * (int)round(arraySize));
-    printf("num: %d\n", num);
+    int num = 64; //primeNumberAbove(1.1 * (int)round(arraySize));
+    
     HashTable *hashTable = (HashTable *)malloc(sizeof(HashTable) * num);
-
+    
     for(int i = 0; i < num; i++){ 
         strcpy(hashTable[i].key, "");
         hashTable[i].value = -1;
     }
-
+    printf("num: %d\n", num);
     *tableSize = num;
     return hashTable;
 }
-
 
 int HashFunction(string key, int tableSize){
     int index = convertAndAppend(key) % tableSize;
@@ -76,13 +75,11 @@ int HashFunction(string key, int tableSize){
 int collisionresolution(HashTable *hashTable, int index, int tableSize){
     int i = 1; 
     while(hashTable[index].value != -1){
-        index = (index + i) % tableSize;
+        index = (index + i * i) % tableSize; // Use quadratic probing to handle collisions
         i++;
     }
     return index;
 }
-
-
 
 void HashArray(string *words, int n, HashTable *hashTable, int tableSize){
     for(int i = 0; i < n; i++){
