@@ -54,7 +54,7 @@ int primeNumberAbove(int num){
 }
 
 HashTable *createHashTable(int arraySize, int *tableSize){
-    int num = 64; //primeNumberAbove(1.1 * (int)round(arraySize));
+    int num = primeNumberAbove(1.1 * (int)round(arraySize));
     
     HashTable *hashTable = (HashTable *)malloc(sizeof(HashTable) * num);
     
