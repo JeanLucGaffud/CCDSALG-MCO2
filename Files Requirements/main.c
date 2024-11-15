@@ -49,9 +49,9 @@ int inputFile(string name, string **words){
 
 void printHashTable(HashTable *hashTable, int n){
     for(int i = 0; i < n; i++){
-        if(hashTable[i].value != -1){
-            printf("@Key: %s @Value: %d\n", hashTable[i].key, hashTable[i].value);
-        }
+        //if(hashTable[i].value != -1){
+            printf("%d.Key: |%s| Value: %d\n", i+1, hashTable[i].key, hashTable[i].value);
+        //}
     }
 }
 
@@ -77,9 +77,12 @@ int main() {
 
     HashArray(words, nWords, hashTable, tableSize);
     printHashTable(hashTable, tableSize);
+
     // printf("Enter the name of the output file: ");
     // scanf("%s", output);
+
     // outputFile(output, hashTable, nWords, tableSize, nKeys, nHome, nCollisions);
+
     free(words);
     free(hashTable);
 

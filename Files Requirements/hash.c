@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdbool.h>
+
 #define MAX_1D_ARRAY 16384
 #define MAX_STRING 16
 typedef char string[MAX_STRING];
@@ -12,20 +13,6 @@ typedef struct {
     int value;
 } HashTable;
 
-int convertAndAppend(char* words) {
-    int length = strlen(words);
-    char result[MAX_STRING * 4] = ""; // Allocate enough space for the new string
-    char temp[10]; // Temporary string to hold the ASCII value of the current character
-
-    // Loop through each character in the words string
-    for (int i = 0; i < length; i++) {
-        int ascii = (int)words[i]; // Get the ASCII value of the current character
-        snprintf(temp, sizeof(temp), "%d", ascii); // Convert the ASCII value to a string
-        strcat(result, temp); // Append the string to the new string
-    }
-
-    return atoi(result); // Convert the new string to an integer
-}
 
 bool isPrime(int num){
     if (num <= 1) {
@@ -62,14 +49,17 @@ HashTable *createHashTable(int arraySize, int *tableSize){
         strcpy(hashTable[i].key, "");
         hashTable[i].value = -1;
     }
-    printf("num: %d\n", num);
+
     *tableSize = num;
     return hashTable;
 }
 
-int HashFunction(string key, int tableSize){
-    int index = convertAndAppend(key) % tableSize;
-    return index;
+unsigned int HashFunction(string key, int tableSize){
+    unsigned int index = 0, i;
+    for(i = 1; i < strlen(key); i++){
+        index += key[i-1] * i;
+    }
+    return index % tableSize;
 }
 
 int collisionresolution(HashTable *hashTable, int index, int tableSize){
@@ -81,8 +71,8 @@ int collisionresolution(HashTable *hashTable, int index, int tableSize){
     return index;
 }
 
-void HashArray(string *words, int n, HashTable *hashTable, int tableSize){
-    for(int i = 0; i < n; i++){
+void HashArray(string *words, int num, HashTable *hashTable, int tableSize){
+    for(int i = 0; i < num; i++){
         int index = HashFunction(words[i], tableSize);
         if(hashTable[index].value == -1 || strcmp(hashTable[index].key, words[i]) == 0){    
             hashTable[index].value = 1;
