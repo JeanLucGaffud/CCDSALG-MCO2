@@ -28,30 +28,30 @@ int inputFile(string name, string **words){
     return num;
 }
 
-// void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHome, int nCollisions){
-//     FILE *f = fopen(name, "w");
+void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHome, int nCollisions){
+    FILE *f = fopen(name, "w");
 
-//     if(f == NULL){
-//         printf("File not found\n");
-//         return;
-//     }
+    if(f == NULL){
+        printf("File not found\n");
+        return;
+    }
 
-//     fprintf(f, "Number of strings read: %d\n", nRead);
+    fprintf(f, "Number of strings read: %d\n", nRead);
 
-//     for(int i = 0; i < nRead; i++){
-//         if(hashTable[i].value != -1){
-//             fprintf(f, "%s %d\n", hashTable[i].key, hashTable[i].value);
-//         }
-//     }
+    for(int i = 0; i < nRead; i++){
+        if(hashTable[i].value != -1){
+            fprintf(f, "%s %d\n", hashTable[i].key, hashTable[i].value);
+        }
+    }
 
-//     fclose(f);
-// }
+    fclose(f);
+}
 
 void printHashTable(HashTable *hashTable, int n){
     for(int i = 0; i < n; i++){
-        //if(hashTable[i].value != -1){
+        if(hashTable[i].value != -1){
             printf("%d.Key: |%s| Value: %d\n", i+1, hashTable[i].key, hashTable[i].value);
-        //}
+        }
     }
 }
 
@@ -66,7 +66,7 @@ int main() {
     string output = "output.txt";
     string *words;
     HashTable *hashTable;
-    int nWords, tableSize;
+    int nWords, tableSize, nHome, nColns, nKeys;
     
     // printf("Enter the name of the file: ");
     // scanf("%s", name);
@@ -75,9 +75,11 @@ int main() {
 
     hashTable = createHashTable(nWords, &tableSize); 
 
-    HashArray(words, nWords, hashTable, tableSize);
+    HashArray(words, nWords, hashTable, tableSize,&nKeys, &nHome, &nColns);
     printHashTable(hashTable, tableSize);
-
+    printf("Number of keys: %d\n", nKeys);
+    printf("Number of keys in home position: %d\n", nHome);
+    printf("Number of collisions: %d\n", nColns);
     // printf("Enter the name of the output file: ");
     // scanf("%s", output);
 

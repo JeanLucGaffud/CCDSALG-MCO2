@@ -57,7 +57,7 @@ HashTable *createHashTable(int arraySize, int *tableSize){
 unsigned int HashFunction(string key, int tableSize){
     unsigned int index = 0, i;
     for(i = 1; i < strlen(key); i++){
-        index += key[i-1] * i;
+        index += key[i-1] * pow(17, i);
     }
     return index % tableSize;
 }
@@ -71,33 +71,43 @@ int collisionresolution(HashTable *hashTable, int index, int tableSize){
     return index;
 }
 
-void HashArray(string *words, int num, HashTable *hashTable, int tableSize){
+void HashArray(string *words, int num, HashTable *hashTable, int tableSize,int *nKeys, int *nHome, int *nColns){
+    int nKeys1 = 0;
+    int nColns1= 0;
+    int nHome1= 0;
     for(int i = 0; i < num; i++){
         int index = HashFunction(words[i], tableSize);
-        if(hashTable[index].value == -1 || strcmp(hashTable[index].key, words[i]) == 0){    
+        if(hashTable[index].value == -1){    
             hashTable[index].value = 1;
             strcpy(hashTable[index].key, words[i]);
-        } else {
+            nKeys1++;
+            nHome1++;
+        } else if( strcmp(hashTable[index].key, words[i]) != 0){
             int newIndex = collisionresolution(hashTable, index, tableSize);
             hashTable[newIndex].value = 1;
             strcpy(hashTable[newIndex].key, words[i]);
+            nKeys1++;
+            nColns1++;
         }
     }
+    *nHome = nHome1;
+    *nColns = nColns1;
+    *nKeys = nKeys1;
 }
 
-// int Search(HashTable *hashTable, int tableSize, string key){
-//     int index = HashFunction(key, tableSize);
-//     int i = 0;
-//     if(strcmp(hashTable[index].key, key) == 0){
-//         return index;
-//     } else {
-//         while(hashTable[index].value != -1 && i < tableSize){
-//             index = (index + i) % tableSize;
-//             if(strcmp(hashTable[index].key, key) == 0){
-//                 return index;
-//             }
-//             i++;
-//         }
-//     }
-//     return -1;
-// }
+int Search(HashTable *hashTable, int tableSize, string key){
+    int index = HashFunction(key, tableSize);
+    int i = 0;
+    if(strcmp(hashTable[index].key, key) == 0){
+        return index;
+    } else {
+        while(hashTable[index].value != -1 && i < tableSize){
+            index = (index + i * i) % tableSize;
+            if(strcmp(hashTable[index].key, key) == 0){
+                return index;
+            }
+            i++;
+        }
+    }
+    return -1;
+}
