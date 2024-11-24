@@ -67,7 +67,7 @@ unsigned int HashFunction(const char* key, int tableSize) {
 int collisionresolution(HashTable *hashTable, int index, int tableSize){
     int i = 1; 
     while(hashTable[index].value != -1){
-        index = (index + i * i) % tableSize; // Use quadratic probing to handle collisions
+        index = (index + i) % tableSize; // Use quadratic probing to handle collisions
         i++;
     }
     return index;
@@ -99,12 +99,12 @@ void HashArray(string *words, int num, HashTable *hashTable, int tableSize,int *
 
 int Search(HashTable *hashTable, int tableSize, string key){
     int index = HashFunction(key, tableSize);
-    int i = 0;
+    int i = 1;
     if(strcmp(hashTable[index].key, key) == 0){
         return index;
     } else {
         while(hashTable[index].value != -1 && i < tableSize){
-            index = (index + i * i) % tableSize;
+            index = (index + i) % tableSize;
             if(strcmp(hashTable[index].key, key) == 0){
                 return index;
             }
