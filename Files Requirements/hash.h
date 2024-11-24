@@ -22,10 +22,9 @@ typedef struct {
 
 // Function prototypes
 HashTable *createHashTable(int arraySize, int *tableSize);
-int findPrime(int n);
-int hashFunction(char *key, int tableSize);
-int collisionResolution(int index, int tableSize, int i);
-int search(HashTable *hashTable, int tableSize, string key);
-unsigned long djb2(unsigned char *str);
-void insert(HashTable *hashTable, int tableSize, string key, int value);
-void delete(HashTable *hashTable, int tableSize, string key);
+bool isPrime(int num);
+int primeNumberAbove(int num);
+unsigned int HashFunction(const char* key, int tableSize);
+int collisionresolution(HashTable *hashTable, int index, int tableSize);
+void HashArray(string *words, int num, HashTable *hashTable, int tableSize,int *nKeys, int *nHome, int *nColns);
+int Search(HashTable *hashTable, int tableSize, string key);
