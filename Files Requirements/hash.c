@@ -56,7 +56,7 @@ HashTable *createHashTable(int arraySize, int *tableSize){
 
 unsigned int HashFunction(const char* key, int tableSize) {
     unsigned int index = 0;
-    for (int i = 0; i < strlen(key); i++) {
+    for (size_t i = 0; i < strlen(key); i++) { // Use size_t for loop index
         index += key[i] * (i + 1); 
         index %= tableSize;       
     }
@@ -67,7 +67,7 @@ unsigned int HashFunction(const char* key, int tableSize) {
 int collisionresolution(HashTable *hashTable, int index, int tableSize){
     int i = 1; 
     while(hashTable[index].value != -1){
-        index = (index + i) % tableSize; // Use quadratic probing to handle collisions
+        index = (index + i) % tableSize; 
         i++;
     }
     return index;

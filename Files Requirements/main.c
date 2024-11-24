@@ -37,12 +37,10 @@ void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHo
     }
 
     fprintf(f, "Number of strings read: %d\n", nRead);
-
-    for(int i = 0; i < nRead; i++){
-        if(hashTable[i].value != -1){
-            fprintf(f, "%s %d\n", hashTable[i].key, hashTable[i].value);
-        }
-    }
+    fprintf(f, "Number of strings stored: %d\n", nKeys);
+    fprintf(f, "Number of keys in home address: %d\n", nHome);
+    fprintf(f, "Number of keys not in home address: %d\n", nCollisions);
+    fprintf(f, "Average number of String comparisons: %.2f\n", (float)(nHome + nCollisions) / nKeys);
 
     fclose(f);
 }
