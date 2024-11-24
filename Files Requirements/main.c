@@ -36,11 +36,11 @@ void outputFile(string name, HashTable *hashTable, int nRead, int nKeys, int nHo
         return;
     }
 
-    fprintf(f, "Number of strings read: %d\n", nRead);
-    fprintf(f, "Number of strings stored: %d\n", nKeys);
-    fprintf(f, "Number of keys in home address: %d\n", nHome);
-    fprintf(f, "Number of keys not in home address: %d\n", nCollisions);
-    fprintf(f, "Average number of String comparisons: %.2f\n", (float)(nHome + nCollisions) / nKeys);
+    fprintf(f, "%d\n", nRead);
+    fprintf(f, "%d\n",nKeys);
+    fprintf(f, "%d\n", nHome);
+    fprintf(f, "%d\n", nCollisions);
+    fprintf(f, "%.6f\n\n");
 
     fclose(f);
 }
