@@ -54,13 +54,15 @@ HashTable *createHashTable(int arraySize, int *tableSize){
     return hashTable;
 }
 
-unsigned int HashFunction(string key, int tableSize){
-    unsigned int index = 0, i;
-    for(i = 1; i < strlen(key); i++){
-        index += key[i-1] * pow(17, i);
+unsigned int HashFunction(const char* key, int tableSize) {
+    unsigned int index = 0;
+    for (int i = 0; i < strlen(key); i++) {
+        index += key[i] * (i + 1); 
+        index %= tableSize;       
     }
     return index % tableSize;
 }
+
 
 int collisionresolution(HashTable *hashTable, int index, int tableSize){
     int i = 1; 
