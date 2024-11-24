@@ -9,6 +9,7 @@ typedef char string[16];
 typedef struct {
     string key;
     int value;
+    int compares;
 } HashTable;
 
 HashTable createHashTable(int tableSize, string hashTable[]);
