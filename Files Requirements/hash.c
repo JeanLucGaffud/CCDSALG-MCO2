@@ -1,20 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <stdbool.h>
+#include "hash.h" // Include hash header file
 
-#define MAX_1D_ARRAY 16384
-#define MAX_STRING 16
-typedef char string[MAX_STRING];
-
-typedef struct {
-    string key;
-    int value;
-    int compares;
-} HashTable;
-
-
+/*
+    @param num: Number to check if it is prime
+    @return: True if the number is prime, False otherwise
+*/
 bool isPrime(int num){
     if (num <= 1) {
         return false;
@@ -40,7 +29,11 @@ int primeNumberAbove(int num){
     }
     return num;
 }
-
+/*
+    @param arraySize: Size of the array
+    @param tableSize: Size of the HashTable
+    @return: HashTable
+*/
 HashTable *createHashTable(int arraySize, int *tableSize){
     int num = primeNumberAbove(1.1 * (int)round(arraySize)); // Use 1.1 to avoid collisions
     
@@ -52,7 +45,7 @@ HashTable *createHashTable(int arraySize, int *tableSize){
     }
 
     *tableSize = num;
-    return hashTable;
+    return hashTable; //Returns the HashTable
 }
 
 /*
@@ -67,7 +60,7 @@ unsigned int HashFunction(const char* key, int tableSize) {
         index += key[i] * (i + 1); //Linear Probing
         index %= tableSize; // Use modulo to wrap around the table    
     }
-    return index % tableSize;
+    return index % tableSize; //Returns the index of the HashTable
 }
 
 /* 
@@ -84,7 +77,7 @@ int collisionresolution(HashTable *hashTable, int index, int tableSize){
         index = (index + i) % tableSize; // Use linear probing for collision resolution
         i++;
     }
-    return index;
+    return index; //Returns the index of the HashTable
 }
 /*
     @param words: Array of strings
@@ -116,9 +109,9 @@ void HashArray(string *words, int num, HashTable *hashTable, int tableSize,int *
         }
         hashTable[index].compares = 0; //Sets the number of comparisons to 0 for default value
     }
-    *nHome = nHome1;
-    *nColns = nColns1;
-    *nKeys = nKeys1;
+    *nHome = nHome1; //Sets the number of keys at home position
+    *nColns = nColns1; //Sets the number of keys with collisions
+    *nKeys = nKeys1; //Sets the number of keys
 }
 
 /*

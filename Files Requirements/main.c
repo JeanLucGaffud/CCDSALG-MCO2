@@ -5,7 +5,14 @@
 #include <stdbool.h>
 #include "hash.c"  // header for hash file and hash table
 
-// Read words from the input file
+/*
+    inputFile function reads the input file and stores the words in an array
+
+    @param name: Name of the input file
+    @param words: Array of strings
+
+    @return: Number of words
+*/
 int inputFile(string name, string **words) {
     FILE *f = fopen(name, "r");
     int num = 0, i = 0;
@@ -29,7 +36,18 @@ int inputFile(string name, string **words) {
     return num;
 }
 
-// results listed in the output file
+/*
+    outputFile function writes the output to a file
+
+    @param name: Name of the output file
+    @param hashTable: HashTable
+    @param tableSize: Size of the HashTable
+    @param nRead: Number of words read
+    @param nKeys: Number of keys
+    @param nHome: Number of keys at home position
+    @param nCollisions: Number of keys with collisions
+    @param avgComparisons: Average number of comparisons
+*/
 void outputFile(string name, HashTable *hashTable, int tableSize, int nRead, int nKeys, int nHome, int nCollisions, double avgComparisons) {
     FILE *f = fopen(name, "w");
 
@@ -39,16 +57,12 @@ void outputFile(string name, HashTable *hashTable, int tableSize, int nRead, int
     }
 
     // Summary details
-    fprintf(f, "Summary:\n");
-    fprintf(f, "Number of strings read: %d\n", nRead);
-    fprintf(f, "Number of strings stored in hash table: %d\n", nKeys);
-    fprintf(f, "Number of strings in their home addresses: %d\n", nHome);
-    fprintf(f, "Number of collisions: %d\n", nCollisions);
-    fprintf(f, "Average number of string comparisons: %.6f\n\n", avgComparisons);
+    fprintf(f, "%d\n", nRead);
+    fprintf(f, "%d\n", nKeys);
+    fprintf(f, "%d\n", nHome);
+    fprintf(f, "%d\n", nCollisions);
+    fprintf(f, "%.6f\n\n", avgComparisons);
 
-    // Table headers
-    fprintf(f, "Index    Key               Home Index    In Home    Comparisons\n");
-    fprintf(f, "-------------------------------------------------------------\n");
 
     // Hash Table information
     for (int i = 0; i < tableSize; i++) {
