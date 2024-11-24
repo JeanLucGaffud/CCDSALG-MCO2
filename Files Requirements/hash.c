@@ -11,6 +11,7 @@ typedef char string[MAX_STRING];
 typedef struct {
     string key;
     int value;
+    int compares;
 } HashTable;
 
 
@@ -106,6 +107,7 @@ int Search(HashTable *hashTable, int tableSize, string key){
         while(hashTable[index].value != -1 && i < tableSize){
             index = (index + i) % tableSize; // Use linear probing for collision resolution
             if(strcmp(hashTable[index].key, key) == 0){
+                hashTable[index].compares = i;
                 return index;
             }
             i++;
