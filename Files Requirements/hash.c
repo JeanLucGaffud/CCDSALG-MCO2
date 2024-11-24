@@ -104,7 +104,7 @@ int Search(HashTable *hashTable, int tableSize, string key){
         return index;
     } else {
         while(hashTable[index].value != -1 && i < tableSize){
-            index = (index + i) % tableSize;
+            index = (index + i) % tableSize; // Use linear probing for collision resolution
             if(strcmp(hashTable[index].key, key) == 0){
                 return index;
             }
