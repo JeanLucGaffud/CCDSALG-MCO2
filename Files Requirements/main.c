@@ -62,7 +62,7 @@ void printArray(string *words, int n){
 }
 
 int main() {
-    string name = "input.txt";
+    string name = "input1.txt";
     string output = "output.txt";
     string *words;
     HashTable *hashTable;
