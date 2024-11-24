@@ -55,6 +55,12 @@ HashTable *createHashTable(int arraySize, int *tableSize){
     return hashTable;
 }
 
+/*
+    @param key: Key to hash
+    @param tableSize: Size of the HashTable
+    @return: Index of the HashTable
+*/
+
 unsigned int HashFunction(const char* key, int tableSize) {
     unsigned int index = 0;
     for (size_t i = 0; i < strlen(key); i++) { // Use size_t for loop index
@@ -63,6 +69,13 @@ unsigned int HashFunction(const char* key, int tableSize) {
     }
     return index % tableSize;
 }
+
+/* 
+    @param hashTable: HashTable
+    @param index: Index of the HashTable
+    @param tableSize: Size of the HashTable
+    @return: Index of the HashTable
+*/
 
 
 int collisionresolution(HashTable *hashTable, int index, int tableSize){
@@ -107,6 +120,13 @@ void HashArray(string *words, int num, HashTable *hashTable, int tableSize,int *
     *nColns = nColns1;
     *nKeys = nKeys1;
 }
+
+/*
+    @param hashTable: HashTable
+    @param tableSize: Size of the HashTable
+    @param key: Key to search
+    @return: Index of the key in the HashTable
+*/
 
 int Search(HashTable *hashTable, int tableSize, string key){
     int index = HashFunction(key, tableSize);
