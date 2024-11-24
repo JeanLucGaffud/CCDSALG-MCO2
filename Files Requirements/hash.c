@@ -92,6 +92,7 @@ void HashArray(string *words, int num, HashTable *hashTable, int tableSize,int *
             nKeys1++;
             nColns1++;
         }
+        hashTable[index].compares = 0;
     }
     *nHome = nHome1;
     *nColns = nColns1;
